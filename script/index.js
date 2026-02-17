@@ -1,70 +1,24 @@
 let info_campers = [
-  {
-    id: "001",
-    nombre: "Carlos",
-    apellido: "Ramírez",
-    direccion: "Calle 12 #45-67",
-    acudiente: "María Ramírez",
-    telefonoCelular: "3001234567",
-    telefonoFijo: "6012345678",
-    estado: "Activo",
-    riesgo: "N/A"
+  {id: "001",nombre: "Carlos",apellido: "Ramírez",direccion: "Calle 12 #45-67",acudiente: "María Ramírez",telefonoCelular: "3001234567",telefonoFijo: "6012345678",estado: "Activo",riesgo: "N/A","notas": {
+      Python: "",
+      Java: "",
+      Git: ""
+    }
   },
-  {
-    id: "002",
-    nombre: "Laura",
-    apellido: "Gómez",
-    direccion: "Carrera 8 #23-45",
-    acudiente: "Jorge Gómez",
-    telefonoCelular: "3012345678",
-    telefonoFijo: "6023456789",
-    estado: "Activo",
-    riesgo: "N/A"
+  {id: "002",nombre: "Laura",apellido: "Gómez",direccion: "Carrera 8 #23-45",acudiente: "Jorge Gómez",telefonoCelular: "3012345678",telefonoFijo: "6023456789",estado: "Activo",riesgo: "N/A"
   },
-  {
-    id: "003",
-    nombre: "Andrés",
-    apellido: "Martínez",
-    direccion: "Av. Siempre Viva 742",
-    acudiente: "Patricia Martínez",
-    telefonoCelular: "3023456789",
-    telefonoFijo: "6034567890",
-    estado: "Inactivo",
-    riesgo: "N/A"
+  {id: "003",nombre: "Andrés",apellido: "Martínez",direccion: "Av. Siempre Viva 742",acudiente: "Patricia Martínez",telefonoCelular: "3023456789",telefonoFijo: "6034567890",estado: "Inactivo",riesgo: "N/A"
   },
-  {
-    id: "004",
-    nombre: "Sofía",
-    apellido: "López",
-    direccion: "Calle 50 #10-20",
-    acudiente: "Ricardo López",
-    telefonoCelular: "3034567890",
-    telefonoFijo: "6045678901",
-    estado: "Activo",
-    riesgo: "N/A"
+  {id: "004",nombre: "Sofía",apellido: "López",direccion: "Calle 50 #10-20",acudiente: "Ricardo López",telefonoCelular: "3034567890",telefonoFijo: "6045678901",estado: "Activo",riesgo: "N/A"
   },
-  {
-    id: "005",
-    nombre: "Miguel",
-    apellido: "Hernández",
-    direccion: "Carrera 15 #30-55",
-    acudiente: "Ana Hernández",
-    telefonoCelular: "3045678901",
-    telefonoFijo: "6056789012",
-    estado: "Activo",
-    riesgo: "N/A"
+  {id: "005",nombre: "Miguel",apellido: "Hernández",direccion: "Carrera 15 #30-55",acudiente: "Ana Hernández",telefonoCelular: "3045678901",telefonoFijo: "6056789012",estado: "Activo",riesgo: "N/A"
   }
 ]
 
-let notas_campers = [
-  {
-    id: "001",
-    nombre: "Carlos",
-    Python: "",
-    Java: "",
-    Git: ""
-  },
+let notas_camper = [
+
 ]
+
 function login () {
 
    // let name = prompt("Ingrese su nombre")
@@ -72,16 +26,11 @@ function login () {
     switch (user) {
       case "1":
         let password_Coordi = prompt("Ingrese su contraseña");
-        let contador = 2;
-        while (password_Coordi !== "Admon321" && contador > 0 ){
-          alert ("Te quedan " + contador + " intentos.");
-          password_Coordi = prompt("Contraseña no reconocida. Intente nuevamente")
-          contador --
-        };
+        validation_passwords(password_Coordi, "Admon321")
         if (password_Coordi == "Admon321") {
           let option_admin = "";
           while (option_admin !== "0" ){
-            option_admin = prompt("--- Bienvenido al perfil de coordinador --- \n\n 1. Ver lista de Campers \n 2. Añadir nuevo Camper \n 3. Editar info Camper \n 4. Nota de los Campers \n 0. SALIR")
+            option_admin = prompt("--- Bienvenido al perfil de coordinador --- \n\n 1. Ver lista de Campers \n 2. Añadir nuevo Camper \n 3. Editar info Camper \n 4. Nota de los Campers \n 0. SALIR");
             switch (option_admin) {
               case "1":
                 console.table(info_campers);
@@ -145,27 +94,31 @@ function login () {
             
             break;
               case "4":
-                let found = id_found(notas_campers);
+                let found = id_found_note(info_campers);
                 if (!found){
                   break
                 } 
 
                 alert("Deje vacío si no desea cambiar el dato.");
             
-                let new_python = prompt("Nota Python:", found.Python);
-                let new_java = prompt("Nota Java:", found.Java);
-                let new_git = prompt("Nota Git:", found.Git);
+                let new_python = prompt("Nota Python:", found['Python']);
+                let new_java = prompt("Nota Java:", found['Java']);
+                let new_git = prompt("Nota Git:", found['Git']);
                 
-                if (new_python) found.Python = new_python;
-                if (new_java) found.Java = new_java;
-                if (new_git) found.Git = nweewit;
+                if (new_python !==null) found['Python'] = new_python;
+                if (new_java !==null) found['Java'] = new_java;
+                if (new_git !==null) found['Git'] = new_git;
 
                 confirm("Camper actualizado correctamente. Presione aceptar para continuar...");
                 console.table(found);
-                
+                break
+              case "5":
+
+                console.table(info_campers);
+              break
               case "0":
                 alert("Saliendo del perfil");
-              break;
+                break;
             }
           }  
             
@@ -174,7 +127,18 @@ function login () {
         
       break;
       case "2":
-        console.log("Bienvenido Trainer");
+        let password_trainer = prompt("Ingrese su contraseña")
+        validation_passwords(password_trainer, "treiner321")
+        let group_trainer = prompt("--- Grupos disponibles --- \n 1. P1 \n 2. E1 \n 3. K1 \n 4. A4");
+        if (validation_passwords){
+          switch(group_trainer){
+            case"1":
+              console.log("Bienvenido al grupo P1")
+        }
+          
+        }
+        
+
       break;
       case "3":
         console.log("Bienvenido Camper");
@@ -186,6 +150,12 @@ login ();
 
 function id_found(table_information) {
   let id_ask = prompt("Ingrese el id del Camper...");
+  
+
+  if (id_ask === null) return null;
+
+  id_ask = id_ask.trim();
+
   let camper = table_information.find(camper => camper.id === id_ask);
             
   if (!camper) {
@@ -194,4 +164,35 @@ function id_found(table_information) {
   } 
   console.table(camper);
   return camper;
+}
+
+function id_found_note(table_information) {
+  let id_ask = prompt("Ingrese el id del Camper...").toString(); 
+
+
+  if (id_ask === null) return null;
+
+  id_ask = id_ask.trim();
+
+  let camper = table_information.find(camper => camper.id === id_ask);
+            
+  if (!camper) {
+    alert("No se encontró un camper con ese ID ");
+    return null;
+  } 
+  console.table(camper.notas);
+  return camper.notas;
+
+}
+
+function validation_passwords(password, c_password){
+  let contador = 2;
+  while (password !== c_password && contador > 0 ){
+    alert ("Te quedan " + contador + " intentos.");
+    password = prompt("Contraseña no reconocida. Intente nuevamente");
+    contador --
+  };
+  if (password == c_password){
+    return true
+  }
 }
