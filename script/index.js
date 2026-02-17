@@ -60,14 +60,14 @@ let notas_campers = [
   {
     id: "001",
     nombre: "Carlos",
-    Python: "Ramírez",
-    Java: "Calle 12 #45-67",
-    Git: "María Ramírez"
+    Python: "",
+    Java: "",
+    Git: ""
   },
 ]
 function login () {
 
-    let name = prompt("Ingrese su nombre")
+   // let name = prompt("Ingrese su nombre")
     let user = prompt("Ingrese su usuario \n\n\n 1. Coordinador \n\n 2. Trainer \n\n 3. Camper");
     switch (user) {
       case "1":
@@ -79,16 +79,19 @@ function login () {
           contador --
         };
         if (password_Coordi == "Admon321") {
-          let option_admin = prompt("--- Bienvenido al perfil de coordinador --- \n\n 1. Ver lista de Campers \n 2. Añadir nuevo Camper \n 3. Editar info Camper \n 0. SALIR")
-          switch (option_admin) {
-            case "1":
-              console.table(info_campers);
-            break;
-            case "2":
+          let option_admin = "";
+          while (option_admin !== "0" ){
+            option_admin = prompt("--- Bienvenido al perfil de coordinador --- \n\n 1. Ver lista de Campers \n 2. Añadir nuevo Camper \n 3. Editar info Camper \n 4. Nota de los Campers \n 0. SALIR")
+            switch (option_admin) {
+              case "1":
+                console.table(info_campers);
+                confirm("Revisa la consola. Presiona OK para continuar");
+              break;
+              case "2":
               let new_id = prompt("Ingrese el nuevo id");
               let exist = info_campers.find(c => c.id === new_id);
               if (exist) {
-                alert("Ya exister un camper con el mismo ID");
+                alert("Ya exister un Camper con el mismo ID");
               break;
               }
             
@@ -113,17 +116,14 @@ function login () {
             
               info_campers.push(nuevoCamper)
             
-              alert("Nuevo Camper añadido correctamente")
+              confirm("Nuevo Camper añadido correctamente. Presione aceptar para continuar...")
             break;
-            case "3":
-              let id_ask = prompt("Ingrese el id del Camper...");
-              let edit_camper = info_campers.find(camper => camper.id === id_ask);
-            
-              if (!edit_camper) {
-                alert("No se encontró un camper con ese ID ");
-                break;
-              }
-            
+              case "3":
+                let edit_camper = id_found(info_campers);
+                if (!edit_camper){
+                  break;
+                }
+                
               alert("Deje vacío si no desea cambiar el dato.");
             
               let nuevoNombre = prompt("Nuevo nombre:", edit_camper.nombre);
@@ -140,15 +140,34 @@ function login () {
               if (nuevoCelular) edit_camper.telefonoCelular = nuevoCelular;
               if (nuevoFijo) edit_camper.telefonoFijo = nuevoFijo;
             
-              alert("Camper actualizado correctamente");
+              confirm("Camper actualizado correctamente. Presione aceptar para continuar...");
               console.table(info_campers);
             
             break;
+              case "4":
+                let found = id_found(notas_campers);
+                if (!found){
+                  break
+                } 
+
+                alert("Deje vacío si no desea cambiar el dato.");
             
-            case "0":
-              alert("Salindo del perfil");
-            break;
-          }
+                let new_python = prompt("Nota Python:", found.Python);
+                let new_java = prompt("Nota Java:", found.Java);
+                let new_git = prompt("Nota Git:", found.Git);
+                
+                if (new_python) found.Python = new_python;
+                if (new_java) found.Java = new_java;
+                if (new_git) found.Git = nweewit;
+
+                confirm("Camper actualizado correctamente. Presione aceptar para continuar...");
+                console.table(found);
+                
+              case "0":
+                alert("Saliendo del perfil");
+              break;
+            }
+          }  
             
 
         }  
@@ -164,7 +183,15 @@ function login () {
 }
 
 login ();
-// let password = prompt("Ingrese su contraseña")
-// const num = parseFloat(password, 10);
-// console.log(typeof num)
-// console.log(password)
+
+function id_found(table_information) {
+  let id_ask = prompt("Ingrese el id del Camper...");
+  let camper = table_information.find(camper => camper.id === id_ask);
+            
+  if (!camper) {
+    alert("No se encontró un camper con ese ID ");
+    return null;
+  } 
+  console.table(camper);
+  return camper;
+}
